@@ -19,7 +19,7 @@
 def targetSystemName = "hosted-usecase-apikey"
 def targetInstance = "3scale-instance"
 def privateBaseURL = "${userinput}"
-//def spath = "${path}"
+def spath = "/api/v1/docs"
 def testUserKey = "7e4fd68bd7238c03f545b0a5f699a55a"
 def developerAccountId = "parosh"
 
@@ -33,7 +33,7 @@ node() {
   stage("Fetch OpenAPI") {
     // Fetch the OpenAPI Specification file and provision it as a ConfigMap
     sh """
-    curl -sfk -o swagger.json ${userinput}/api/v1/docs
+    curl -sfk -o swagger.json ${userinput} + ${spath}
     oc delete configmap openapi --ignore-not-found
     oc create configmap openapi --from-file="swagger.json"
     """
